@@ -30,7 +30,7 @@
             content: '';
             position: fixed;
             inset: 0;
-            background-image: url('https://i.pinimg.com/originals/dd/00/d5/dd00d5037f3dd7a159db739ca398bc91.gif');
+            background-image: url('https://github.com/freecrime/existxnce/releases/download/001/bg.gif');
             background-size: cover;
             background-position: center;
             filter: blur(8px);
@@ -594,7 +594,7 @@
         
         <div class="profile-header">
             <div class="avatar">
-                <img src="https://i.pinimg.com/originals/16/c1/82/16c1828f46582e1ef249565167e1f1c7.gif" alt="existxnce">
+                <img src="https://github.com/freecrime/existxnce/releases/download/001/pfp.gif" alt="existxnce">
             </div>
             <div class="profile-info">
                 <div class="name-wrapper">
@@ -661,38 +661,20 @@
         </div>
     </div>
 
-    <iframe id="scPlayer" style="display:none" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
-        src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/user-457081799/pashanim-sommergewitter-slowed%3Fsi%3Df919fe59f2ca495ca08b16d24affe0b0%26utm_source%3Dclipboard%26utm_medium%3Dtext%26utm_campaign%3Dsocial_sharing&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
-    </iframe>
+    <audio id="bgMusic" loop>
+        <source src="https://github.com/freecrime/existxnce/releases/download/001/song.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
-        let scWidget;
-        let widgetReady = false;
+        let audio = document.getElementById('bgMusic');
         let hasPlayed = false;
 
-        let scScript = document.createElement('script');
-        scScript.src = 'https://w.soundcloud.com/player/api.js';
-        document.head.appendChild(scScript);
-
-        scScript.onload = function() {
-            let iframe = document.getElementById('scPlayer');
-            scWidget = SC.Widget(iframe);
-            
-            scWidget.bind(SC.Widget.Events.READY, function() {
-                widgetReady = true;
-                scWidget.setVolume(70);
-            });
-
-            scWidget.bind(SC.Widget.Events.FINISH, function() {
-                scWidget.seekTo(0);
-                scWidget.play();
-            });
-        };
+        audio.volume = 0.7;
 
         const overlay = document.getElementById('overlay');
         overlay.addEventListener('click', function() {
-            if (!widgetReady || hasPlayed) return;
-            scWidget.play();
+            if (hasPlayed) return;
+            audio.play();
             hasPlayed = true;
             overlay.classList.add('hidden');
             document.body.classList.add('overlay-dismissed');
@@ -701,9 +683,7 @@
         const volumeSlider = document.getElementById('volumeSlider');
         if (volumeSlider) {
             volumeSlider.addEventListener('input', function() {
-                if (widgetReady && scWidget) {
-                    scWidget.setVolume(this.value);
-                }
+                audio.volume = this.value / 100;
             });
         }
 
@@ -777,4 +757,3 @@
     </script>
 </body>
 </html>
-
